@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+
+## declaring global variables
+
+DIR=$(dirname "$(readlink -f "${0}")")
+export JAVA="$DIR/usr/share/jdk"
+export BURP="$DIR/usr/share/burpsuite-professional"
+export LD_LIBRARY_PATH="$DIR/usr/share/jdk/lib":$LD_LIBRARY_PATH
+
+
+## execution path with java
+
+"$JAVA/bin/java" "--add-opens=java.desktop/javax.swing=ALL-UNNAMED" "--add-opens=java.base/java.lang=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED" "-javaagent:$BURP/burploader.jar" "-noverify" "-jar" "$BURP/burpsuite_pro_v2023.10.2.jar"  &
+
+"$JAVA/bin/java" -jar "$BURP/burploader.jar" 
